@@ -14,28 +14,27 @@ return new class extends Migration
             $table->string('price', 50);
             $table->string('unit', 50);
             $table->string('img_url', 100);
+
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('category_id');
-
             $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->cascadeOnUpdate()
-                ->restrictOnDelete();
+                    ->references('id')
+                    ->on('users')
+                    ->cascadeOnUpdate()
+                    ->restrictOnDelete();
 
+            $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')
-                ->references('id')
-                ->on('categories')
-                ->cascadeOnUpdate()
-                ->restrictOnDelete();
-
+                    ->references('id')
+                    ->on('categories')
+                    ->cascadeOnUpdate()
+                    ->restrictOnDelete();
 
             $table->timestamp('created_at')
-                ->useCurrent();
+                    ->useCurrent();
 
             $table->timestamp('updated_at')
-                ->useCurrent()
-                ->useCurrentOnUpdate();
+                    ->useCurrent()
+                    ->useCurrentOnUpdate();
         });
     }
 

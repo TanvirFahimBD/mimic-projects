@@ -19,15 +19,20 @@ class CustomerController extends Controller
     {
         try
         {
-            $data = Customer::where('user_id', '=', $request->header('id'))->get();
-            if(count($data)){
+            $data = Customer::where('user_id', '=', $request->header('id'))
+                            ->orderBy('id', 'desc')
+                            ->get();
+
+            if(count($data))
+            {
                 return response()->json([
                     'status'=>'success',
                     'message'=>'Request successful',
                     'data'=>$data
                 ], 200);
             }
-            else{
+            else
+            {
                 return response()->json([
                     'status'=>'error',
                     'message'=>'Customer Data not found'
@@ -45,7 +50,8 @@ class CustomerController extends Controller
 
     public function CustomerCreate(Request $request):JsonResponse
     {
-        try{
+        try
+        {
             $name = $request->input('name');
             $email = $request->input('email');
             $mobile = $request->input('mobile');
@@ -56,21 +62,25 @@ class CustomerController extends Controller
                 'mobile' => $mobile,
                 'user_id' => $user_id,
             ]);
-            if($data){
+
+            if($data)
+            {
                 return response()->json([
                     'status'=>'success',
                     'message'=>'Customer Created Successfully',
                     'response'=>$data
                 ], 201);
             }
-            else{
+            else
+            {
                 return response()->json([
                     'status'=>'error',
                     'message'=>'Customer create failed!!!'
                 ]);
             }
         }
-        catch (\Exception $e){
+        catch (\Exception $e)
+        {
             return response()->json([
                 'status'=>'error',
                 'message'=>'Customer create failed!!!',
@@ -112,7 +122,8 @@ class CustomerController extends Controller
 
     public function CustomerUpdate(Request $request):JsonResponse
     {
-        try{
+        try
+        {
             $customer_id = $request->input('id');
             $name = $request->input('name');
             $email = $request->input('email');
@@ -125,21 +136,25 @@ class CustomerController extends Controller
                     'email' => $email,
                     'mobile' => $mobile
                 ]);
-            if($data){
+
+            if($data)
+            {
                 return response()->json([
                     'status'=>'success',
                     'message'=>'Customer updated successfully',
                     'data' => $data
                 ], 200);
             }
-            else{
+            else
+            {
                 return response()->json([
                     'status'=>'error',
                     'message'=>'Customer updated failed'
                 ]);
             }
         }
-        catch (\Exception $e){
+        catch (\Exception $e)
+        {
             return response()->json([
                 'status'=>'error',
                 'message'=>'Customer updated failed',
@@ -150,31 +165,34 @@ class CustomerController extends Controller
 
     public function CustomerDelete(Request $request):JsonResponse
     {
-        try{
+        try
+        {
             $data = Customer::where('id', '=', $request->input('id'))
-                ->where('user_id', '=', $request->header('id'))
-                ->delete();
+                            ->where('user_id', '=', $request->header('id'))
+                            ->delete();
 
-            if($data){
+            if($data)
+            {
                 return response()->json([
                     'status'=>'success',
                     'message'=>'Customer deleted successfully',
                     'data'=>$data
                 ], 200);
             }
-            else{
+            else
+            {
                 return response()->json([
                     'status'=>'error',
                     'message'=>'Customer delete failed!!!'
                 ]);
             }
         }
-        catch (\Exception $e){
+        catch (\Exception $e)
+        {
             return response()->json([
                 'status'=>'error',
                 'message'=>'Customer delete failed!!!',
             ]);
         }
-
     }
 }
